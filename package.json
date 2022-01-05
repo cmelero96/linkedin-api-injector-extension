@@ -1,0 +1,22 @@
+{
+  "name": "linkedin-api-injector-extension",
+  "version": "1.0.0",
+  "description": "Chrome extension to inject into a Linkedin profile the data received from an API",
+  "main": "scripts/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmelero96/linkedin-api-injector-extension.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cmelero96/linkedin-api-injector-extension/issues"
+  },
+  "homepage": "https://github.com/cmelero96/linkedin-api-injector-extension#readme",
+  "devDependencies": {
+    "jest": "^27.4.7"
+  }
+}

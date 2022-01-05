@@ -1,7 +1,7 @@
 {
   "name": "Linkedin API Injector",
   "version": "1.0",
-  "description": "Extension to inject into a Linkedin profile the data received from an API.",
+  "description": "Chrome extension to inject into a Linkedin profile the data received from an API",
   "manifest_version": 2,
   "incognito": "split",
   "icons": {
@@ -11,13 +11,13 @@
     {
       "matches": ["https://www.linkedin.com/in/*"],
 
-      "js": ["./main.js"],
+      "js": ["./scripts/main.js"],
       "css": ["./main.css"]
     }
   ],
 
   "background": {
-    "scripts": ["./background.js"]
+    "scripts": ["./scripts/background.js"]
   },
 
   "permissions": ["webNavigation", "*://*/*", "https://*/*"]
