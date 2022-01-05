@@ -26,27 +26,33 @@ const manageApiData = ({ data }) => {
 };
 
 const navigate = (value, key, parentElement) => {
-  const newDiv = createDiv(key, parentElement);
-
   if (typeof value !== 'object') {
     // Primitive type: String or number most likely
-    newDiv.innerHTML = key.split('-').pop() + ': ' + value;
+    const newDiv = createDiv(key, value, parentElement);
   } else if (Array.isArray(value)) {
     // Array of elements
+    const newDiv = createDiv(key, '', parentElement);
     value.forEach((element, i) => navigate(element, `${key}-${i}`, newDiv));
   } else if (value !== null) {
     // Object
+    const newDiv = createDiv(key, '', parentElement);
     for (property in value) {
       navigate(value[property], `${key}-${property}`, newDiv);
     }
   }
 };
 
-const createDiv = (id, parent) => {
+const createDiv = (id, value = '', parent) => {
   const element = document.createElement('div');
   element.id = id;
-  element.innerHTML = id.split('-').pop();
   parent.appendChild(element);
+
+  if (id === '__userData__') {
+    element.innerHTML = 'Data obtained from the API';
+  } else {
+    element.innerHTML = id.split('-').pop() + ': ' + value;
+    element.style.marginLeft = '1.5em';
+  }
 
   return element;
 };
