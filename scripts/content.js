@@ -11,7 +11,9 @@ const manageApiData = ({ data }) => {
   } else {
     console.log('Creating new panel...');
     // If the panel didn't exist, create it from scratch
-    const mainUserPanel = document.getElementById('ember34');
+    const mainUserPanel = document.querySelector(
+      '.artdeco-card.ember-view.pv-top-card'
+    );
     const newPanel = document.createElement('div');
     newPanel.id = extensionId;
     mainUserPanel.parentNode.insertBefore(newPanel, mainUserPanel.nextSibling);
