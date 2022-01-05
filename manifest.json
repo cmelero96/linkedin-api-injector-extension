@@ -1,0 +1,10 @@
+{
+  "name": "Linkedin API Injector",
+  "version": "1.0",
+  "description": "Extension to inject into a Linkedin profile the data received from an API.",
+  "manifest_version": 2,
+  "incognito": "split",
+  "icons": {
+    "128": "icon.png"
+  }
+}
