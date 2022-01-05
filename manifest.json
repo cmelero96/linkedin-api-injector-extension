@@ -11,13 +11,13 @@
     {
       "matches": ["https://www.linkedin.com/in/*"],
 
-      "js": ["./main.js"],
-      "css": ["./main.css"]
+      "js": ["./scripts/content.js"],
+      "css": ["./content.css"]
     }
   ],
 
   "background": {
-    "scripts": ["./background.js"]
+    "scripts": ["./scripts/background.js"]
   },
 
   "permissions": ["webNavigation", "*://*/*", "https://*/*"]
