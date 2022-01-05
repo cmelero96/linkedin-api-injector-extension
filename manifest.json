@@ -14,5 +14,11 @@
       "js": ["./main.js"],
       "css": ["./main.css"]
     }
-  ]
+  ],
+
+  "background": {
+    "scripts": ["./background.js"]
+  },
+
+  "permissions": ["webNavigation", "*://*/*", "https://*/*"]
 }
