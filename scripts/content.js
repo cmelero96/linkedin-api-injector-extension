@@ -31,31 +31,32 @@ const manageApiData = ({ data }) => {
 };
 
 const navigate = (value, key, parentElement) => {
-  if (typeof value !== 'object') {
+  if (key === '__userData') {
+    // Special case for the initial object
+    const wrapper = createDiv('', '', parentElement);
+    wrapper.classList.add('content-wrapper');
+  } else if (typeof value !== 'object') {
     // Primitive type: String or number most likely
     const newDiv = createDiv(key, value, parentElement);
   } else if (Array.isArray(value)) {
     // Array of elements
     const newDiv = createDiv(key, '', parentElement);
-    value.forEach((element, i) => navigate(element, `${key}-${i}`, newDiv));
+    value.forEach((element, i) => navigate(element, i, newDiv));
   } else if (value !== null) {
     // Object
     const newDiv = createDiv(key, '', parentElement);
     for (property in value) {
-      navigate(value[property], `${key}-${property}`, newDiv);
+      navigate(value[property], property, newDiv);
     }
   }
 };
 
 const createDiv = (id, value = '', parent) => {
   const element = document.createElement('div');
-  element.id = id;
   parent.appendChild(element);
 
-  if (id !== '__userData__') {
-    element.innerHTML = id.split('-').pop() + ': ' + value;
-    element.style.marginLeft = '1.5em';
-  }
+  element.innerHTML = id.split('-').pop() + ': ' + value;
+  element.style.marginLeft = '1.5em';
 
   return element;
 };
