@@ -4,9 +4,9 @@ const manageApiData = ({ data }) => {
 
   if (apiInjectorPanel) {
     console.log('Emptying old panel...');
-    // If the panel already existed, delete all of its contents
-    while (apiInjectorPanel.firstChild) {
-      apiInjectorPanel.firstChild.remove();
+    // If the panel already existed, delete all of its contents except the title
+    while (apiInjectorPanel.childNodes.length > 1) {
+      apiInjectorPanel.removeChild(apiInjectorPanel.lastChild);
     }
   } else {
     console.log('Creating new panel...');
@@ -14,9 +14,14 @@ const manageApiData = ({ data }) => {
     const mainUserPanel = document.querySelector(
       '.artdeco-card.ember-view.pv-top-card'
     );
-    const newPanel = document.createElement('div');
+    const newPanel = document.createElement('section');
     newPanel.id = extensionId;
     mainUserPanel.parentNode.insertBefore(newPanel, mainUserPanel.nextSibling);
+
+    const panelTitle = document.createElement('header');
+    panelTitle.id = 'api-injected-data-title';
+    panelTitle.innerHTML = 'Data received from the API';
+    newPanel.appendChild(panelTitle);
 
     apiInjectorPanel = newPanel;
   }
@@ -47,9 +52,7 @@ const createDiv = (id, value = '', parent) => {
   element.id = id;
   parent.appendChild(element);
 
-  if (id === '__userData__') {
-    element.innerHTML = 'Data obtained from the API';
-  } else {
+  if (id !== '__userData__') {
     element.innerHTML = id.split('-').pop() + ': ' + value;
     element.style.marginLeft = '1.5em';
   }
