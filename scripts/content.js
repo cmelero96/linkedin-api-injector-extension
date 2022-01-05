@@ -31,34 +31,57 @@ const manageApiData = ({ data }) => {
 };
 
 const navigate = (value, key, parentElement) => {
-  if (key === '__userData') {
-    // Special case for the initial object
-    const wrapper = createDiv('', '', parentElement);
-    wrapper.classList.add('content-wrapper');
-  } else if (typeof value !== 'object') {
+  if (typeof value !== 'object') {
     // Primitive type: String or number most likely
-    const newDiv = createDiv(key, value, parentElement);
+    createContentDiv(key, value, parentElement);
   } else if (Array.isArray(value)) {
     // Array of elements
-    const newDiv = createDiv(key, '', parentElement);
-    value.forEach((element, i) => navigate(element, i, newDiv));
+    const arrayWrapper = createWrapper(key, parentElement);
+    value.forEach((element, i) => navigate(element, i, arrayWrapper));
   } else if (value !== null) {
     // Object
-    const newDiv = createDiv(key, '', parentElement);
+    const objectWrapper =
+      key === '__userData__'
+        ? createMainWrapper(parentElement) // Special case for the initial object
+        : createWrapper(key, parentElement);
+
     for (property in value) {
-      navigate(value[property], property, newDiv);
+      navigate(value[property], property, objectWrapper);
     }
   }
 };
 
-const createDiv = (id, value = '', parent) => {
+const createContentDiv = (id, value, parent) => {
   const element = document.createElement('div');
   parent.appendChild(element);
 
-  element.innerHTML = id.split('-').pop() + ': ' + value;
+  element.innerHTML = `${id}: ${value}`;
   element.style.marginLeft = '1.5em';
 
   return element;
+};
+
+const createMainWrapper = (parent) => {
+  const element = document.createElement('div');
+  parent.appendChild(element);
+
+  return element;
+};
+
+const createWrapper = (title, parent) => {
+  const wrapper = document.createElement('details');
+  parent.appendChild(wrapper);
+  wrapper.setAttribute('open', '');
+  wrapper.style.marginLeft = '1.5em';
+
+  const titleElement = document.createElement('summary');
+  wrapper.appendChild(titleElement);
+  titleElement.innerHTML = title;
+
+  const content = document.createElement('section');
+  wrapper.appendChild(content);
+
+  return content;
 };
 
 chrome.runtime.onMessage.addListener(manageApiData);

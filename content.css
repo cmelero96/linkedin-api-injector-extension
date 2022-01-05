@@ -2,3 +2,13 @@
   text-decoration: underline;
   font-weight: bold;
 }
+
+#api-injected-data details > summary {
+  list-style: none;
+  cursor: pointer;
+  width: fit-content;
+}
+
+#api-injected-data details > summary:hover {
+  background-color: lightblue;
+}
