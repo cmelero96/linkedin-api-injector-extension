@@ -26,64 +26,65 @@ const manageApiData = ({ data }) => {
     apiInjectorPanel = newPanel;
   }
 
-  navigate(data, '__userData__', apiInjectorPanel);
+  const content = createContent(data, '__userData__');
+  apiInjectorPanel.appendChild(content);
   console.log('Injection finished.');
 };
 
-const navigate = (value, key, parentElement) => {
+const createContent = (value, key) => {
   if (typeof value !== 'object') {
-    createContent(key, value, parentElement);
-  } else if (Array.isArray(value)) {
-    const arrayWrapper = createContainer('array', parentElement);
+    const contentElement = createElement(key, value);
 
-    value.forEach((element, i) => navigate(element, i, arrayWrapper));
+    return contentElement;
+  } else if (Array.isArray(value)) {
+    const arrayWrapper = createContainer('array');
+
+    value.forEach((element, i) => {
+      const child = createContent(element, i, arrayWrapper);
+      arrayWrapper.appendChild(child);
+    });
 
     arrayWrapper.insertAdjacentText('afterbegin', `${key}: [`);
     arrayWrapper.insertAdjacentText('beforeend', `]`);
+
+    return arrayWrapper;
   } else if (value !== null) {
     const isMainObject = key === '__userData__';
 
     const objectWrapper = isMainObject
-      ? createMainWrapper(parentElement) // Special case for the initial object
-      : createContainer('object', parentElement);
+      ? document.createElement('div') // Special case for the initial object
+      : createContainer('object');
 
     for (property in value) {
-      navigate(value[property], property, objectWrapper);
+      const child = createContent(value[property], property, objectWrapper);
+      objectWrapper.appendChild(child);
     }
 
     if (!isMainObject) {
       objectWrapper.insertAdjacentText('afterbegin', `${key}: {`);
       objectWrapper.insertAdjacentText('beforeend', `}`);
     }
+
+    return objectWrapper;
   }
 };
 
-const createContent = (id, value, parent) => {
+const createElement = (id, value) => {
   const element = document.createElement('li');
-  parent.appendChild(element);
-
   element.innerHTML = `${id}: ${value}`;
   element.style.marginLeft = '1.5em';
 
   return element;
 };
 
-const createContainer = (type, parent) => {
+const createContainer = (type) => {
   const wrapper = document.createElement('li');
-  parent.appendChild(wrapper);
-
   const container = document.createElement(type === 'object' ? 'ul' : 'ol');
-  wrapper.appendChild(container);
   container.style.marginLeft = '1.5em';
 
+  wrapper.appendChild(container);
+
   return container;
-};
-
-const createMainWrapper = (parent) => {
-  const wrapper = document.createElement('div');
-  parent.appendChild(wrapper);
-
-  return wrapper;
 };
 
 chrome.runtime.onMessage.addListener(manageApiData);
