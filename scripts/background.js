@@ -32,7 +32,7 @@ const getApiData = async () => {
 
   await fetch('https://randomuser.me/api')
     .then((res) => {
-      if (!res.ok) {
+      if (res.ok) {
         return res.json();
       } else {
         throw { errorCode: res.status };
