@@ -16,6 +16,11 @@ chrome.webNavigation.onCompleted.addListener(({ frameId, tabId, url }) => {
   }
 });
 
+// Bugfix 01: Make content script be executed after new tab without having to reload
+chrome.webNavigation.onHistoryStateUpdated.addListener(() => {
+  chrome.tabs.executeScript(null, { file: 'scripts/content.js' });
+});
+
 // Method to execute in both page (re)load and url change
 const method = (tabId) => {
   chrome.tabs.sendMessage(tabId, { data: getApiData() }, () => {});
