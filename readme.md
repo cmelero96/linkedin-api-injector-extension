@@ -18,7 +18,9 @@ This is a simple Chrome extension that makes a call to https://randomuser.me/api
 - [ ] Replace fake data with actual API call
 - [ ] Catch errors and provide fallback data in case of problems
 - [ ] Create basic styling so that the content matches with LinkedIn's theme somewhat
-- [ ] Replace the divs with _details_ tags, so the user can click on a non-primitive parameter to collapse it if they're not interested in it
+- [x] (Discarded for clunkyness; see next point) Replace the divs with _details_ tags, so the user can click on a non-primitive parameter to collapse it if they're not interested in it
+- [ ] Replace the divs with _ul_ and _li_ tags because they make much more sense semantically than _details_.
+- [ ] (Optional) make _ul_ elements be collapsable on click.
 - [ ] Make the panel have maximum height and let user scroll through it, instead of taking up a lot of space if the object received has a lot of fields
 - [ ] Find a way to setup unit testing for a Chrome extension
 - [ ] Create advanced styling and maybe replace image URLs with the actual image
