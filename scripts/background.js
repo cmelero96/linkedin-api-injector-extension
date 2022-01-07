@@ -31,8 +31,34 @@ const getApiData = async () => {
   let apiResponse;
 
   await fetch('https://randomuser.me/api')
-    .then((res) => res.json())
-    .then((data) => (apiResponse = data));
+    .then((res) => {
+      if (res.ok) {
+        // return res.json();
+        throw new Error();
+      } else {
+        console.log(res);
+        throw { message: 'The API call has failed.', errorCode: res.status };
+      }
+    })
+    .then((data) => (apiResponse = data))
+    .catch((e) => (apiResponse = getFallbackData(e)));
 
   return apiResponse.results[0];
+};
+
+const getFallbackData = ({ message, errorCode }) => {
+  return {
+    results: [
+      {
+        error: {
+          message:
+            message ||
+            'The API call was unsuccessful and nothing could be retrieved.',
+          code:
+            errorCode ||
+            'Unknown; this means something broke in the code. Please try again later.',
+        },
+      },
+    ],
+  };
 };
