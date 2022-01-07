@@ -3,12 +3,7 @@
   font-weight: bold;
 }
 
-#api-injected-data details > summary {
+#api-injected-data li {
   list-style: none;
-  cursor: pointer;
   width: fit-content;
-}
-
-#api-injected-data details > summary:hover {
-  background-color: lightblue;
 }

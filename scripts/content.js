@@ -32,27 +32,34 @@ const manageApiData = ({ data }) => {
 
 const navigate = (value, key, parentElement) => {
   if (typeof value !== 'object') {
-    // Primitive type: String or number most likely
-    createContentDiv(key, value, parentElement);
+    createContent(key, value, parentElement);
   } else if (Array.isArray(value)) {
-    // Array of elements
-    const arrayWrapper = createWrapper(key, parentElement);
+    const arrayWrapper = createContainer('array', parentElement);
+
     value.forEach((element, i) => navigate(element, i, arrayWrapper));
+
+    arrayWrapper.insertAdjacentText('afterbegin', `${key}: [`);
+    arrayWrapper.insertAdjacentText('beforeend', `]`);
   } else if (value !== null) {
-    // Object
-    const objectWrapper =
-      key === '__userData__'
-        ? createMainWrapper(parentElement) // Special case for the initial object
-        : createWrapper(key, parentElement);
+    const isMainObject = key === '__userData__';
+
+    const objectWrapper = isMainObject
+      ? createMainWrapper(parentElement) // Special case for the initial object
+      : createContainer('object', parentElement);
 
     for (property in value) {
       navigate(value[property], property, objectWrapper);
     }
+
+    if (!isMainObject) {
+      objectWrapper.insertAdjacentText('afterbegin', `${key}: {`);
+      objectWrapper.insertAdjacentText('beforeend', `}`);
+    }
   }
 };
 
-const createContentDiv = (id, value, parent) => {
-  const element = document.createElement('div');
+const createContent = (id, value, parent) => {
+  const element = document.createElement('li');
   parent.appendChild(element);
 
   element.innerHTML = `${id}: ${value}`;
@@ -61,27 +68,22 @@ const createContentDiv = (id, value, parent) => {
   return element;
 };
 
-const createMainWrapper = (parent) => {
-  const element = document.createElement('div');
-  parent.appendChild(element);
+const createContainer = (type, parent) => {
+  const wrapper = document.createElement('li');
+  parent.appendChild(wrapper);
 
-  return element;
+  const container = document.createElement(type === 'object' ? 'ul' : 'ol');
+  wrapper.appendChild(container);
+  container.style.marginLeft = '1.5em';
+
+  return container;
 };
 
-const createWrapper = (title, parent) => {
-  const wrapper = document.createElement('details');
+const createMainWrapper = (parent) => {
+  const wrapper = document.createElement('div');
   parent.appendChild(wrapper);
-  wrapper.setAttribute('open', '');
-  wrapper.style.marginLeft = '1.5em';
 
-  const titleElement = document.createElement('summary');
-  wrapper.appendChild(titleElement);
-  titleElement.innerHTML = title;
-
-  const content = document.createElement('section');
-  wrapper.appendChild(content);
-
-  return content;
+  return wrapper;
 };
 
 chrome.runtime.onMessage.addListener(manageApiData);
