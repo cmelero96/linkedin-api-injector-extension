@@ -16,7 +16,7 @@ This is a simple Chrome extension that makes a call to https://randomuser.me/api
 
 - [x] Get an initial working version using fake data
 - [x] Replace fake data with actual API call
-- [ ] Catch errors and provide fallback data in case of problems
+- [x] Catch errors and provide fallback data in case of problems
 - [ ] Create basic styling so that the content matches with LinkedIn's theme somewhat
 - [x] (Discarded for clunkyness; see next point) Replace the divs with _details_ tags, so the user can click on a non-primitive parameter to collapse it if they're not interested in it
 - [x] Replace the divs with _ul_ and _li_ tags because they make much more sense semantically than _details_.
