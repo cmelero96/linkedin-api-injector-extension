@@ -23,6 +23,6 @@ This is a simple Chrome extension that makes a call to https://randomuser.me/api
 - [ ] Find a way to setup unit testing for a Chrome extension
 - [ ] Create advanced styling and maybe replace image URLs with the actual image
 
-## KNOWN BUGS
+## Known bugs
 
 - [ ] 01 - The extension doesn't seem to work after creating a new Tab/Window. You need to refresh the page for it to start working normally in all expected scenarios.
