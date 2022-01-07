@@ -22,3 +22,7 @@ This is a simple Chrome extension that makes a call to https://randomuser.me/api
 - [ ] Make the panel have maximum height and let user scroll through it, instead of taking up a lot of space if the object received has a lot of fields
 - [ ] Find a way to setup unit testing for a Chrome extension
 - [ ] Create advanced styling and maybe replace image URLs with the actual image
+
+## KNOWN BUGS
+
+- [ ] 01 - The extension doesn't seem to work after creating a new Tab/Window. You need to refresh the page for it to start working normally in all expected scenarios.
