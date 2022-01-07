@@ -1,9 +1,29 @@
-#api-injected-data-title {
-  text-decoration: underline;
-  font-weight: bold;
+#api-injected-data {
+  padding: 24px;
+  margin: 16px 0;
+  font-size: 14px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+#api-injected-data > .main-wrapper {
+  max-height: 24rem;
+  white-space: nowrap;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 #api-injected-data li {
   list-style: none;
   width: fit-content;
+}
+
+#api-injected-data-title {
+  font-weight: 400;
+  font-size: 2rem;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', 'Fira Sans', Ubuntu, Oxygen, 'Oxygen Sans', Cantarell,
+    'Droid Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Lucida Grande', Helvetica, Arial, sans-serif;
 }

@@ -1,33 +1,43 @@
 const manageApiData = ({ data }) => {
   const extensionId = 'api-injected-data';
   let apiInjectorPanel = document.getElementById(extensionId);
+  let contentWrapper;
 
   if (apiInjectorPanel) {
     console.log('Emptying old panel...');
+    contentWrapper = apiInjectorPanel.firstChild;
+
     // If the panel already existed, delete all of its contents except the title
-    while (apiInjectorPanel.childNodes.length > 1) {
-      apiInjectorPanel.removeChild(apiInjectorPanel.lastChild);
+    while (contentWrapper.childNodes.length > 1) {
+      contentWrapper.removeChild(contentWrapper.lastChild);
     }
   } else {
     console.log('Creating new panel...');
     // If the panel didn't exist, create it from scratch
-    const mainUserPanel = document.querySelector(
-      '.artdeco-card.ember-view.pv-top-card'
-    );
     const newPanel = document.createElement('section');
     newPanel.id = extensionId;
-    mainUserPanel.parentNode.insertBefore(newPanel, mainUserPanel.nextSibling);
+
+    // Find the panel with user info and place our new panel just after it
+    const userInfoPanel = document.querySelector('.pv-top-card');
+    userInfoPanel.parentNode.insertBefore(newPanel, userInfoPanel.nextSibling);
+
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('main-wrapper');
 
     const panelTitle = document.createElement('header');
     panelTitle.id = 'api-injected-data-title';
     panelTitle.innerHTML = 'Data received from the API';
-    newPanel.appendChild(panelTitle);
+
+    newPanel.appendChild(wrapper);
+    wrapper.appendChild(panelTitle);
 
     apiInjectorPanel = newPanel;
+    contentWrapper = wrapper;
   }
 
   const content = createContent(data, '__userData__');
-  apiInjectorPanel.appendChild(content);
+  contentWrapper.appendChild(content);
+
   console.log('Injection finished.');
 };
 
