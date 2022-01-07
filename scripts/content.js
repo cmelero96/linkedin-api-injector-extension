@@ -41,7 +41,9 @@ const createContent = (value, key) => {
 
     value.forEach((element, i) => {
       const child = createContent(element, i, arrayWrapper);
-      arrayWrapper.appendChild(child);
+      if (child) {
+        arrayWrapper.appendChild(child);
+      }
     });
 
     arrayWrapper.insertAdjacentText('afterbegin', `${key}: [`);
@@ -57,7 +59,9 @@ const createContent = (value, key) => {
 
     for (property in value) {
       const child = createContent(value[property], property, objectWrapper);
-      objectWrapper.appendChild(child);
+      if (child) {
+        objectWrapper.appendChild(child);
+      }
     }
 
     if (!isMainObject) {
