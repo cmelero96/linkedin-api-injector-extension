@@ -32,12 +32,10 @@ const getApiData = async () => {
 
   await fetch('https://randomuser.me/api')
     .then((res) => {
-      if (res.ok) {
-        // return res.json();
-        throw new Error();
+      if (!res.ok) {
+        return res.json();
       } else {
-        console.log(res);
-        throw { message: 'The API call has failed.', errorCode: res.status };
+        throw { errorCode: res.status };
       }
     })
     .then((data) => (apiResponse = data))
@@ -54,7 +52,7 @@ const getFallbackData = ({ message, errorCode }) => {
           message:
             message ||
             'The API call was unsuccessful and nothing could be retrieved.',
-          code:
+          statusCode:
             errorCode ||
             'Unknown; this means something broke in the code. Please try again later.',
         },
